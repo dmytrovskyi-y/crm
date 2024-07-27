@@ -297,3 +297,4 @@ cython_debug/
 .idea/
 
 .migrations/
+/templates_only/
