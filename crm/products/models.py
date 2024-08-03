@@ -16,5 +16,10 @@ class Product(models.Model):
     description = models.TextField(max_length=250, verbose_name="description")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="price")
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+
+        return reverse("products:detail-product", kwargs={"id": self.id})
+
     def __str__(self) -> str:
         return f"{self.name} product."
