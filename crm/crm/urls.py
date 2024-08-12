@@ -23,3 +23,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("products/", include("products.urls")),
 ]
+
+admin.site.site_header = "Administration panel"
+admin.site.index_title = "CRM system"

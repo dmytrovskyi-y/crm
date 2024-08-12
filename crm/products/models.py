@@ -13,8 +13,9 @@ class Product(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50, verbose_name="name")
-    description = models.TextField(max_length=250, verbose_name="description")
+    description = models.TextField(max_length=500, verbose_name="description")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="price")
+    is_active = models.BooleanField(default=False, verbose_name="active status")
 
     def get_absolute_url(self):
         from django.urls import reverse
