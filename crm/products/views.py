@@ -8,7 +8,7 @@ from .models import Product
 
 class ProductsListView(ListView):
     """Product List View Class"""
-    queryset = Product.objects.all()
+    queryset = Product.objects.filter(is_active=True)
     context_object_name = "products"
     template_name = "products/products-list.html"
 
