@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User, Group
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.test import TestCase, Client
@@ -45,6 +46,7 @@ class ProductViewTestCase(TestCase):
         super().setUpTestData()
 
         cls.data = {
+            "user": User.objects.create(username="Tester", password="password123"),
             "product": Product.objects.filter(is_active=True),
             "list_url": reverse_lazy("products:products-list"),
             "list_template": "products/products-list.html",
@@ -68,9 +70,14 @@ class ProductViewTestCase(TestCase):
                 "price": 800
             }
         }
+        Group.objects.create(name="Marketer")
+        group = Group.objects.get(name="Marketer")
+        cls.data["user"].groups.add(group)
+        cls.data["user"].save()
 
     def setUp(self):
         self.client = Client()
+        self.client.force_login(self.data["user"])
 
     @classmethod
     def tearDownClass(cls):
