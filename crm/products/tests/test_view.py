@@ -4,33 +4,7 @@ from django.template.response import TemplateResponse
 from django.test import TestCase, Client
 from django.urls import reverse_lazy, reverse
 
-from .forms import ProductForm
-from .models import Product
-
-
-class ProductModelTestCase(TestCase):
-    """
-    App Model Tests Products
-    """
-
-    @classmethod
-    def setUpTestData(cls):
-        super().setUpTestData()
-        cls.product = Product.objects.create(name="test_name", description="test_description", price=10.50)
-
-    @classmethod
-    def tearDownClass(cls):
-        super().tearDownClass()
-        cls.product.delete()
-
-    def test_correct_creating_new_product(self):
-        """
-        Test of correct creation of a model object Product.
-        :return: None
-        """
-        expected_data = ["test_name", "test_description", 10.50]
-        new_obj_data = [self.product.name, self.product.description, self.product.price]
-        self.assertSequenceEqual(expected_data, new_obj_data)
+from ..models import Product
 
 
 class ProductViewTestCase(TestCase):
@@ -39,6 +13,7 @@ class ProductViewTestCase(TestCase):
     """
     fixtures = [
         "fixtures/02-product-fixtures.json",
+        # "fixtures/04-grope-fixtures.json",
     ]
 
     @classmethod
@@ -70,6 +45,7 @@ class ProductViewTestCase(TestCase):
                 "price": 800
             }
         }
+        # print(Group.objects.all())
         Group.objects.create(name="Marketer")
         group = Group.objects.get(name="Marketer")
         cls.data["user"].groups.add(group)
@@ -144,37 +120,3 @@ class ProductViewTestCase(TestCase):
         response = self.client.post(reverse("products:delete-product", kwargs={"id": obj_id}))
         self.assertRedirects(response, reverse_lazy("products:products-list"), status_code=302)
         self.assertFalse(Product.objects.filter(id=obj_id).exists())
-
-
-class FormTestCase(TestCase):
-    """
-    Tests ProductForm form.
-    """
-
-    @classmethod
-    def setUpTestData(cls):
-        super().setUpTestData()
-        cls.correct_data_form = {
-            "name": "test_name",
-            "description": "test_description",
-            "price": 20.88
-        }
-
-    def test_form_with_correct_data(self):
-        """
-        Test form with correct data and waited passing of form.is_valid().
-        :return: None
-        """
-        form = ProductForm(data=self.correct_data_form)
-        self.assertTrue(form.is_valid())
-
-    def test_price_with_incorrect_data(self):
-        """
-        Testing a form with incorrect data (price < 0) sent to it.
-        :return: None
-        """
-        self.correct_data_form["price"] = -1.99
-        form = ProductForm(data=self.correct_data_form)
-
-        self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors["price"][0], "Price must be a positive number")
