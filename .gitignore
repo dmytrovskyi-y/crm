@@ -299,3 +299,4 @@ cython_debug/
 .migrations/
 /templates_only/
 /crm/users/models.py
+/crm/advertising/migrations/
