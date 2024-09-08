@@ -7,7 +7,7 @@
         <div class="card border-light shadow" style="background: #eee">
             <div class="card-body bg-gray-900">
                 <h5 class="card-title fw-bold">
-                    <a href="/products/" class="link-dark text-decoration-none">Услуг</a>
+                    <a href="{% url 'products:products-list' %}" class="link-dark text-decoration-none">Services</a>
                 </h5>
                 <i class="fas fa-microchip float-end"></i>
                 <p class="card-text fw-bold fs-1">{{ products_count }}</p>
@@ -18,7 +18,7 @@
         <div class="card border-light shadow" style="background: #eee">
             <div class="card-body">
                 <h5 class="card-title fw-bold">
-                    <a href="/ads/" class="link-dark text-decoration-none">Рекламных компаний</a>
+                    <a href="{% url 'advertising:ads-list' %}" class="link-dark text-decoration-none">Advertising companies</a>
                 </h5>
                 <i class="fas fa-ad float-end"></i>
                 <p class="card-text fw-bold fs-1">{{ advertisements_count }}</p>
