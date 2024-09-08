@@ -22,6 +22,7 @@ urlpatterns = [
     path("", include("users.urls")),
     path("admin/", admin.site.urls),
     path("products/", include("products.urls")),
+    path("ads/", include("advertising.urls")),
 ]
 
 admin.site.site_header = "Administration panel"
